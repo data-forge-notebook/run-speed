@@ -20,10 +20,10 @@ const notebook = {
             {
                 "cellScope": "global",
                 "cellType": "code",
-                "code": "const { DataFrame, Series } = require('data-forge');\r\nconst { readFileSync } = require('data-forge-fs');\r\nrequire('data-forge-plot');\r\n\r\nconst gpsPings = readFileSync(\"ping-data.json\").parseJSON(); // Load the JSON data file.",
+                "code": "const { DataFrame, Series } = require('data-forge');\r\nconst { readFile } = require('data-forge-fs');\r\nrequire('data-forge-plot');\r\n\r\nconst gpsPings = await readFile(\"ping-data.json\").parseJSON(); // Load the JSON data file.",
                 "errors": [],
                 "id": "48e468c1-a758-11e9-8194-df826e3e75d6",
-                "lastEvaluationDate": "2019-07-17T17:02:06.129+10:00",
+                "lastEvaluationDate": "2019-07-18T07:55:12.745+10:00",
                 "output": []
             },
             {
@@ -40,7 +40,7 @@ const notebook = {
                 "code": "display(gpsPings.head(3));",
                 "errors": [],
                 "id": "254e0b00-a85c-11e9-b28b-71ec12408101",
-                "lastEvaluationDate": "2019-07-17T17:02:06.139+10:00",
+                "lastEvaluationDate": "2019-07-18T07:55:12.757+10:00",
                 "output": [
                     {
                         "values": [
@@ -115,7 +115,7 @@ const notebook = {
                 "code": "// Calculate the distance between two lat/long coordinates\r\n// Taken from https://stackoverflow.com/questions/27928/calculate-distance-between-two-latitude-longitude-points-haversine-formula\r\n\r\nfunction deg2rad(deg) {\r\n    return deg * (Math.PI / 180)\r\n}\r\n\r\nfunction getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {\r\n    var R = 6371; // Radius of the earth in km\r\n    var dLat = deg2rad(lat2 - lat1);  // deg2rad below\r\n    var dLon = deg2rad(lon2 - lon1);\r\n    var a =\r\n        Math.sin(dLat / 2) * Math.sin(dLat / 2) +\r\n        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *\r\n        Math.sin(dLon / 2) * Math.sin(dLon / 2)\r\n        ;\r\n    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));\r\n    var d = R * c; // Distance in km\r\n    return d;\r\n}",
                 "errors": [],
                 "id": "62971ef0-a764-11e9-8194-df826e3e75d6",
-                "lastEvaluationDate": "2019-07-17T17:02:06.145+10:00",
+                "lastEvaluationDate": "2019-07-18T07:55:12.767+10:00",
                 "output": []
             },
             {
@@ -132,7 +132,7 @@ const notebook = {
                 "code": "\r\nconst transformedData = gpsPings\r\n    .parseDates('timestamp')        // Make sure our dates are parsed to JavaScript Date objects.\r\n    .where(p => p.accuracy <= 20)   // Exclude low accuracy pings.\r\n    .rollingWindow(2)               // Group data by pairs.\r\n    .select(w => {                  // Transfom the data, find distance and time between point and compute speed.\r\n        const prev = w.first();\r\n        const curr = w.last();\r\n        const distance = getDistanceFromLatLonInKm(\r\n            prev.latitude, prev.longitude,\r\n            curr.latitude, curr.longitude\r\n        );\r\n        const time = (curr.timestamp - prev.timestamp) / 1000;\r\n        const speed = ((60 * 60) / time) * distance;\r\n        return { distance, speed };\r\n    })\r\n    .inflate() \r\n    .rollingWindow(10)              // Summarize the data with a 10 period sum and average.\r\n    .select(window =>\r\n        window.summarize({          // Create a summary of each 10 period data window.\r\n            distance: Series.sum,\r\n            speed: Series.average\r\n        })\r\n    )\r\n    .inflate();",
                 "errors": [],
                 "id": "11181670-a759-11e9-8194-df826e3e75d6",
-                "lastEvaluationDate": "2019-07-17T17:02:06.151+10:00",
+                "lastEvaluationDate": "2019-07-18T07:55:12.773+10:00",
                 "output": []
             },
             {
@@ -149,7 +149,7 @@ const notebook = {
                 "code": "display(transformedData.head(3));",
                 "errors": [],
                 "id": "e54765f0-a85c-11e9-85b7-094d78d4bbdd",
-                "lastEvaluationDate": "2019-07-17T17:02:06.156+10:00",
+                "lastEvaluationDate": "2019-07-18T07:55:12.778+10:00",
                 "output": [
                     {
                         "values": [
@@ -209,7 +209,7 @@ const notebook = {
                 "code": "display(transformedData.plot());",
                 "errors": [],
                 "id": "f47c1160-a85c-11e9-85b7-094d78d4bbdd",
-                "lastEvaluationDate": "2019-07-17T17:02:06.164+10:00",
+                "lastEvaluationDate": "2019-07-18T07:55:12.789+10:00",
                 "output": [
                     {
                         "values": [
