@@ -11,7 +11,7 @@ const notebook = {
             },
             {
                 "cellType": "markdown",
-                "code": "## Load the data\r\n\r\nFirst we need to record the data loaded from the pings. \r\n\r\nThis data is stored in a JSON file so we use Data-Forge's functions for reading files and parsing JSON data.",
+                "code": "## Load the data\r\n\r\nFirst we need to load the record data for the server pings.\r\n\r\nThis data is stored in a JSON file so we use Data-Forge's functions for reading files and parsing JSON data.",
                 "errors": [],
                 "id": "f5aa74b0-a85b-11e9-b28b-71ec12408101",
                 "lastEvaluationDate": "2019-07-17T16:30:57.232+10:00",
@@ -103,7 +103,7 @@ const notebook = {
             },
             {
                 "cellType": "markdown",
-                "code": "## Helper functions\r\n\r\nWe need to be able to compute the distance between GPS coordinates so let's define some helper functions to do that.",
+                "code": "## Helper functions\r\n\r\nWe need to be able to compute the distance between GPS coordinates, so now let's define some helper functions to do that.",
                 "errors": [],
                 "id": "58708ee0-a85c-11e9-b28b-71ec12408101",
                 "lastEvaluationDate": "2019-07-17T16:30:57.232+10:00",
@@ -120,7 +120,7 @@ const notebook = {
             },
             {
                 "cellType": "markdown",
-                "code": "## Transform and summarize\r\n\r\nNow let's transform our data to compute distance and speed.",
+                "code": "## Transform and summarize\r\n\r\nNow we transform our data to compute the distance and speed between pings to the server.",
                 "errors": [],
                 "id": "b35dfe50-a85c-11e9-85b7-094d78d4bbdd",
                 "lastEvaluationDate": "2019-07-17T16:37:12.147+10:00",
@@ -137,7 +137,7 @@ const notebook = {
             },
             {
                 "cellType": "markdown",
-                "code": "## Preview transformed data\r\n\r\nWe better preview the transformed data not to make sure we haven't messed it up.",
+                "code": "## Preview transformed data\r\n\r\nAgain we should preview our data, to make sure we haven't messed it up.",
                 "errors": [],
                 "id": "cfe24180-a85c-11e9-85b7-094d78d4bbdd",
                 "lastEvaluationDate": "2019-07-17T16:37:12.147+10:00",
@@ -197,7 +197,7 @@ const notebook = {
             },
             {
                 "cellType": "markdown",
-                "code": "## Plot the data\r\n\r\nFinally let's plot the data to get a better feel for it.",
+                "code": "## Plot the data\r\n\r\nFinally let's plot the data to get a better feel for the shape of it.",
                 "errors": [],
                 "id": "ea00f660-a85c-11e9-85b7-094d78d4bbdd",
                 "lastEvaluationDate": "2019-07-17T16:37:12.147+10:00",
